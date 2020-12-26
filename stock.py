@@ -49,7 +49,7 @@ def doJob():
   logging.basicConfig(level=logging.INFO, filename='index.html',filemode='a',format=' %(message)s<br>')
   if constant.exeSwitch:
     scheduler = BlockingScheduler()
-    scheduler.add_job(execute, 'cron',hour='0-22',minute='*/1', id='job1')
+    scheduler.add_job(execute, 'cron',hour='0-23',minute='*/1', id='job1')
     #清理数据 九点清理数据
     #scheduler.add_job(cleanData, 'cron',hour=9,minute=1,id='job2')
     #scheduler.add_job(processCorrect, 'cron',hour=00,minute=58,id='job3')
@@ -192,6 +192,8 @@ def prosessSinbleStockAllInfo(stockCode,code,stockName,yesterDayPrice):
        logging.info("买入参考 name="+stockName+" code="+stockCode+" 时间="+nowTime+" 当前低位"+str(round(currentLatitude,2))) 
      if currentAmplitude >= 1:
        risePoint = risePoint+1
+       if risePoint>1 and currentLatitude<3:
+         smsVerifySend(stockCode,nowTime,baseDate)
        logging.info("name="+stockName+" code="+stockCode+" 时间="+nowTime+" 涨跌幅:"+str(round(currentLatitude,2))+" 上扬次数:"+str(risePoint)+" 分钟级别上扬:"+str(round(currentAmplitude,2)))
        cursor.execute("INSERT INTO minute_level (stock_code, stock_name, rise_point, down_point, current_amplitude_rise, current_latitude, now_time,deal_date) VALUES (%s, %s, %s, %s, %s, %s, %s,%s)",(stockCode,stockName,str(risePoint),str(downPoint),str(round(currentAmplitude,2)),str(round(currentLatitude,2)),nowTime,baseDate))
        db.commit()
@@ -250,6 +252,7 @@ def processDownThree(nowTime):
     for downThree in downThreeFetch:
       #涨停股下杀近5个点才可介入
       if downThree[8]>9.5 and downThree[6]<-4.8:
+        smsVerifySend(downThree[0],nowTime,baseDate)    
         logging.info("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s" % (downThree[0],nowTime[11:17],downThree[2],downThree[3],downThree[4],downThree[5],downThree[6],downThree[7]))
       elif downThree[8]<=9.5:
         logging.info("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s" % (downThree[0],nowTime[11:17],downThree[2],downThree[3],downThree[4],downThree[5],downThree[6],downThree[7]))
@@ -302,10 +305,10 @@ def sevenFiveProcess(stockCode,nowPrice,nowTime):
       startPercent = startPrice/maxPrice
       nowPercent = nowPrice/maxPrice
       if startPercent>0.76 and nowPercent<0.752:
-        smsVerifySend(stockCode,nowTime,baseDate) 
+        #smsVerifySend(stockCode,nowTime,baseDate) 
         print("发送第1梯度",stockCode,nowTime,nowPrice)
       if startPercent<0.75 and  nowPercent<0.708:
-        smsVerifySend(stockCode,nowTime,baseDate)
+        #smsVerifySend(stockCode,nowTime,baseDate)
         print("发送第2梯度",stockCode,nowTime,nowPrice)
       if nowPercent<0.62:
         smsVerifySend(stockCode,nowTime,baseDate)

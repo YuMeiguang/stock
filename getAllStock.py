@@ -21,7 +21,7 @@ token=response.text
 
 cursor = db.cursor()
 
-beforeDate = "2020-11-20"
+beforeDate = "2020-11-24"
 
 def doJob():
   #5分钟同步一次

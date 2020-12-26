@@ -23,14 +23,15 @@ cursor = db.cursor()
 cursor.execute("select deal_date from trade_days where deal_date<=DATE(now()) ORDER BY deal_date desc limit 1")
 
 #获取当前时间
-#baseDate='2020-10-23'
+#baseDate='2020-12-01'
 baseDate = str(cursor.fetchone()[0])
 
 now = datetime.datetime.now()
 
 endTime  = now.strftime('%Y-%m-%d %H:%M:%S')
 
-#endTime  = '2020-06-10 15:00:00'
+#baseDate='2020-12-24'
+#endTime  = '2020-12-24 15:00:00'
 
 def execute(baseDate):
   #插入当前没有的股票

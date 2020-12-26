@@ -44,9 +44,9 @@ def smsVerifySend(code,nowTime,baseDate):
        pass
     else:
       response = client.do_action(request)
-      #cursor.execute("select stock_name from stock_day_base_info where stock_code='%s' AND DATE(create_time)='%s'" % (code,baseDate))
-      #stockName = cursor.fetchone()[0]
-      stockName='weizhi'
+      cursor.execute("select stock_name from all_stock where stock_code='%s' " % (code))
+      stockName = cursor.fetchone()[0]
+      #stockName='weizhi'
       cursor.execute("INSERT INTO sms_send_record (stock_code,stock_name, phone_number, send_date) VALUES ('%s','%s', '%s', '%s')" % (code,stockName,number,nowTime))
       db.commit()
       print(str(response, encoding = 'utf-8'))
@@ -56,11 +56,11 @@ def timeBetween():
   timeStr = str(datetime.datetime.now())
   timeNumber = int(timeStr[11:13])
   # 时间范围结果
-  return timeNumber>=1 and timeNumber<=2
+  return timeNumber>=9 and timeNumber<=15
 
 def sms75Rule(stockCode,nowPrice):
     print(10)
 
 
 if __name__ == '__main__':
-  smsVerifySend('603986','2020-12-04 09:35:00','2020-12-04')
+  smsVerifySend('603986','2020-12-18 09:35:00','2020-12-18')

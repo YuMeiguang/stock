@@ -10,7 +10,7 @@ import constant
 db = pymysql.connect(constant.host,constant.userName,constant.password,"market",charset="utf8")
 cursor = db.cursor()
 
-baseDate = "2020-10-23"
+baseDate = "2020-12-24"
 
 def processSyn(baseDate):
   closeTime = baseDate + " 14:59:00"
