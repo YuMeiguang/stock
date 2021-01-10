@@ -6,7 +6,7 @@ import datetime
 import decimal
 from decimal import *
 import pymysql
-import constant
+import ../constant
 
 
 db = pymysql.connect(constant.host,constant.userName,constant.password,"market",charset="utf8")
@@ -23,7 +23,7 @@ token=response.text
 
 cursor = db.cursor()
 
-beforeDate = "2020-05-14"
+beforeDate = "2021-05-14"
 
 now = datetime.datetime.now()
 

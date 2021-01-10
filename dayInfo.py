@@ -23,7 +23,7 @@ cursor = db.cursor()
 cursor.execute("select deal_date from trade_days where deal_date<=DATE(now()) ORDER BY deal_date desc limit 1")
 
 #获取当前时间
-#baseDate='2020-12-01'
+#baseDate='2021-01-06'
 baseDate = str(cursor.fetchone()[0])
 
 now = datetime.datetime.now()

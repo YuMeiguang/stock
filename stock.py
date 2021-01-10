@@ -238,6 +238,7 @@ def processDayCompleteInfo(stockCode,code,stockName,note,holdFlag):
     yesterDayPrice = yesterDayPriceArray[2]
     cursor.execute("SELECT A.maxPrice FROM (select max(high_price) as maxPrice,stock_code,stock_name from hold_stock_day_info where deal_date>=(SELECT * FROM (select deal_date from trade_days where deal_date<=DATE(now()) ORDER BY deal_date DESC limit 12) A ORDER BY A.deal_date limit 1) GROUP BY  stock_code) A where A.stock_code = '%s'" % (stockCode))
     max12Price =  cursor.fetchone()
+    print(stockCode,stockName,yesterDayPrice,note,baseDate,holdFlag,max12Price)
     cursor.execute("INSERT INTO stock_day_base_info(stock_code,stock_name,yesterday_price,note,create_time,update_time,hold_flag,max_12_price) VALUES (%s,%s,%s,%s,%s,now(),%s,%s)",(stockCode,stockName,yesterDayPrice,note,baseDate,holdFlag,str(max12Price[0]))) 
     db.commit()
     return yesterDayPrice
