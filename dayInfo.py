@@ -30,8 +30,8 @@ now = datetime.datetime.now()
 
 endTime  = now.strftime('%Y-%m-%d %H:%M:%S')
 
-#baseDate='2020-12-24'
-#endTime  = '2020-12-24 15:00:00'
+#baseDate='2021-01-13'
+#endTime  = '2021-01-24 15:00:00'
 
 def execute(baseDate):
   #插入当前没有的股票
