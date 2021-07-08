@@ -1,5 +1,0 @@
-Django==2.2.8
-sqlparse==0.3.0
-uWSGI==2.0.18
-redis==3.3.11
-djangorestframework==3.11.0
